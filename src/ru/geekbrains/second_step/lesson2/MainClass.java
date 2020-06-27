@@ -4,30 +4,19 @@ import ru.geekbrains.second_step.lesson2Exception.MyArrayDataException;
 import ru.geekbrains.second_step.lesson2Exception.MyArraySizeException;
 
 public class MainClass {
+    static  int ARRAYSIZE = 4;
+
     public static void main(String[] args) {
-        String  arrayFirst[][] = new String[][]{
-                {"11", "21", "31", "41"},
-                {"12", "22", "32", "42"},
-                {"13", "23", "33", "43"},
-                {"14", "24", "34", "44"}
+        String  array[][] = new String[ARRAYSIZE][ARRAYSIZE] ;
+        for (int i=0; i<ARRAYSIZE; i++){
+            for (int j=0; j<ARRAYSIZE; j++){
+                array[i][j] = String.valueOf(i) + String.valueOf(j);
+            }
         };
 
-        String  arraySecond[][] = new String[][]{
-                {"11", "21", "op", "41"},
-                {"12", "22", "32", "42"},
-                {"13", "23", "23", "43"},
-                {"14", "24", "34", "44"}
-        };
-
-        String  arrayThird[][] = new String[][]{
-                {"11", "21", "22"},
-                {"12", "22", "32"},
-                {"13", "23", "23"},
-                {"14", "24", "34"}
-        };
 
         try{
-            System.out.println( "сумма чисел массиива = "arrayConversion( arrayFirst ) );
+            System.out.println( "сумма чисел массиива = "+ arrayConversion( array ) );
         }catch (MyArraySizeException | MyArrayDataException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -35,8 +24,10 @@ public class MainClass {
 
         System.out.println();
 
+        array[0][2] = "op";
+
         try{
-            System.out.println( arrayConversion( arraySecond ) );
+            System.out.println( arrayConversion( array ) );
         }catch (MyArraySizeException | MyArrayDataException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -44,8 +35,15 @@ public class MainClass {
 
         System.out.println();
 
+        String [][]arrayBad = new String [][]{
+                {"1","2","3","4"},
+                {"1","2","3","4"},
+                {"1","2","3"},
+                {"1","2","3","4"}
+        };
+
         try{
-            System.out.println( arrayConversion( arrayThird ) );
+            System.out.println( arrayConversion( arrayBad ) );
         }catch (MyArraySizeException | MyArrayDataException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -53,14 +51,20 @@ public class MainClass {
     }
 
     static int arrayConversion(String[][] array) throws MyArraySizeException, MyArrayDataException {
-        if ( ( array.length != 4 ) || ( array[0].length != 4 ) ){
+
+        if ( array.length != ARRAYSIZE ) {
             throw new MyArraySizeException();
+        }
+        for (int i=0; i<array.length; i++){
+            if (array[i].length != ARRAYSIZE){
+                throw new MyArraySizeException();
+            }
         }
 
         int sum = 0;
 
-        for (int j = 0; j < 4; j++){
-            for (int i = 0; i<4; i++ ){
+        for (int j = 0; j < ARRAYSIZE; j++){
+            for (int i = 0; i < ARRAYSIZE; i++ ){
                 try {
                     sum += Integer.parseInt(array[j][i]);
 
